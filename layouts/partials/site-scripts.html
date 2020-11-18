@@ -21,24 +21,16 @@
 
 
 <!-- Highlight -->
-{{ if .Site.Params.highlightjs }}  
+{{ if .Site.Params.highlightjs }}
   <script src="{{ "js/vendors/highlight.pack.js" | absURL }}"> </script>
   <script>hljs.initHighlightingOnLoad();</script>
 {{ end }}
 <!-- /.Highlight -->
 
-<!-- KaTeX -->
-{{ if .Site.Params.katex }} 
-  <script src="{{ "js/vendors/katex/katex.min.js" | absURL }}"> </script>
-  <script src="{{ "js/vendors/katex/contrib/auto-render.min.js" | absURL }}"></script>
-
-  <script>
-      document.addEventListener("DOMContentLoaded", function () {
-          renderMathInElement(document.body);
-      });
-  </script>
+<!-- Latex Rendering -->
+{{ if .Site.Params.mathjax }}
+  {{ partial "mathjaxSupport.html" . }}
 {{ end }}
-<!-- /.KaTeX -->
 
 
 <!-- Google Analytics -->
@@ -49,6 +41,3 @@
   // Animations initialization
   new WOW().init();
 </script>
-
-
-

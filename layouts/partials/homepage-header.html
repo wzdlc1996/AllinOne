@@ -1,5 +1,5 @@
 {{ $path := cond (gt (len .Site.Params.slidesDirPath) 0) $.Site.Params.slidesDirPath "themes/AllinOne/static/img/header-slides" }}
-{{ $pathURL := cond (gt (len .Site.Params.slidesDirPathURL) 0) $.Site.Params.slidesDirPathURL "img/header-slides" }} 
+{{ $pathURL := cond (gt (len .Site.Params.slidesDirPathURL) 0) $.Site.Params.slidesDirPathURL "img/header-slides" }}
 
 {{ $files := readDir $path  }}
 {{ $files := where $files  "Name" "ne" ".DS_Store" }}
@@ -35,7 +35,7 @@
 
               <!-- Content -->
               <!-- <div class="text-center white-text wow fadeIn">
-                
+
               </div> -->
               <!-- /.Content -->
 
@@ -54,7 +54,7 @@
             <!-- Mask & flexbox options -->
             <div class="mask rgba-black-light d-flex justify-content-center align-items-center">
 
-            
+
 
             </div>
             <!-- /.Mask & flexbox options -->
@@ -65,7 +65,7 @@
       {{ end }}
     {{ end }}
 
-  
+
   </div>
   <!-- /.Slides -->
 
@@ -101,7 +101,7 @@
         <!-- Ref Icon -->
         <div class="mt-2" style="font-size: 2rem; color: white;">
             {{ if $.Site.Params.github }}
-              <a href="{{ $.Site.Params.github }}" target="_blank" rel="noopener"><i class="fab fa-github pr-1" aria-hidden="true"></i></a>    
+              <a href="{{ $.Site.Params.github }}" target="_blank" rel="noopener"><i class="fab fa-github pr-1" aria-hidden="true"></i></a>
             {{ end }}
             {{ if $.Site.Params.linkedin }}
               <a href="{{ $.Site.Params.linkedin }}" target="_blank" rel="noopener"><i class="fab fa-linkedin pr-1" aria-hidden="true"></i></a>
@@ -122,18 +122,20 @@
             {{ if $.Site.Params.instagram }}
                 <a href="{{ $.Site.Params.instagram }}" target="_blank" rel="noopener"><i class="fab fa-instagram pr-1" aria-hidden="true"></i></a>
             {{ end }}
-    
+
             {{ if $.Site.Params.px500 }}
                 <a href="{{ $.Site.Params.px500 }}" target="_blank" rel="noopener"><i class="fab fa-500px pr-1" aria-hidden="true"></i></a>
             {{ end }}
-    
-        
+
+
             {{ if $.Site.Params.email }}
                 <a href="mailto:{{ $.Site.Params.email }}"><i class="far fa-envelope-open pr-1" aria-hidden="true"></i></a>
             {{ end }}
-    
-            {{ if and $.Site.Params.include_rss $.RSSLink }}
-                <a href="{{ $.RSSLink }}"><i class="fas fa-rss pr-1" aria-hidden="true"></i></a>
+
+            {{ with .OutputFormats.Get "RSS" }}
+              {{ if and $.Site.Params.include_rss .RelPermalink }}
+                  <a href="{{ .RelPermalink }}"><i class="fas fa-rss pr-1" aria-hidden="true"></i></a>
+              {{ end }}
             {{ end }}
 
         </div>

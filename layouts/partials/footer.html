@@ -6,7 +6,7 @@
   <!-- Social icons -->
   <div class="pb-2 mt-5 pt-5">
     {{ if $.Site.Params.github }}
-      <a href="{{ $.Site.Params.github }} " target="_blank" rel="noopener"><i class="fab fa-github mr-3" aria-hidden="true"></i></a>    
+      <a href="{{ $.Site.Params.github }} " target="_blank" rel="noopener"><i class="fab fa-github mr-3" aria-hidden="true"></i></a>
     {{ end }}
     {{ if $.Site.Params.linkedin }}
       <a href="{{ $.Site.Params.linkedin }}" target="_blank" rel="noopener"><i class="fab fa-linkedin-in mr-3" aria-hidden="true"></i></a>
@@ -37,8 +37,10 @@
         <a href="mailto:{{ $.Site.Params.email }}"><i class="far fa-envelope-open mr-3" aria-hidden="true"></i></a>
     {{ end }}
 
-    {{ if and $.Site.Params.include_rss $.RSSLink }}
-        <a href="{{ $.RSSLink }}"><i class="fas fa-rss mr-3" aria-hidden="true"></i></a>
+    {{ with .OutputFormats.Get "RSS" }}
+      {{ if and $.Site.Params.include_rss .RelPermalink }}
+          <a href="{{ .RelPermalink }}"><i class="fas fa-rss mr-3" aria-hidden="true"></i></a>
+      {{ end }}
     {{ end }}
 
     {{ if and $.Site.Params.i18n_flags $.IsTranslated }}
