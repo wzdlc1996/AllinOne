@@ -17,6 +17,28 @@
 
 <script type="text/javascript" src="{{ "js/vendors/mdb/mdb.min.js" | absURL }}"></script>
 
+
+{{ if .Site.Params.lightbox }}
+<script type="text/javascript" src="{{ "js/vendors/lightbox/lightbox.min.js" | absURL }}"></script>
+<script type="text/javascript">
+(function () {
+  var imgList = document.getElementsByTagName("img");
+  var imgLen = imgList.length;
+  for (var i = 0; i < imgLen; i++) {
+    imgList[i].id = "imgtmp" + i;
+    var imgtmp = document.getElementById("imgtmp" + i);
+    var a = document.createElement("a");
+    imgtmp.parentNode.replaceChild(a, imgtmp);
+    a.href = imgtmp.src;
+    a.rel = "lightbox";
+    a.appendChild(imgtmp);
+  }
+}());
+</script>
+
+
+{{ end }}
+
 <script type="text/javascript" src="{{ "js/main.js" | absURL }}"></script>
 
 
