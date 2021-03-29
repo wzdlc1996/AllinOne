@@ -21,7 +21,16 @@
 
 
           <div class="post-content markdown">
-            {{ .Content }}
+          <!-- Replace the backslash for html escaping
+            {{ $eqs := findRE "\\$[^\\$]+?\\$[^\\n]" .Content }}
+            {{ $content := .Content }}
+            {{ range $key, $eqitem := $eqs }}
+              {{ $modEqItem := replace $eqitem "\\ " "\\\\ " }}
+              {{ $content =  replace $content $eqitem $modEqItem }}
+            {{ end }}
+            {{ $content | safeHTML }}
+          -->
+            {{ partial "escapeMathjaxEq.html" . }}
           </div>
 
           <!-- Tags -->
