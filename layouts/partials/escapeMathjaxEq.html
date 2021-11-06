@@ -10,8 +10,8 @@
 
 
 
-{{ $niceInlineEqs := findRE "[^\\$][$][^\\$]+?[$][^\\$]" .RawContent }}
-{{ $badInlineEqs := findRE " [$][^\\$]+?[$] " $rddcont }}
+{{ $niceInlineEqs := findRE "[^\\$][$][^\\$\n]+?[$][^\\$]" .RawContent }}
+{{ $badInlineEqs := findRE " [$][^\\$\n]+?[$] " $rddcont }}
 {{ range $ind, $val := $niceInlineEqs }}
     {{ $newval := replaceRE "([$][^\\$]+?[$])" " $1 " $val }}
     {{ $rddcont = replace $rddcont (index $badInlineEqs $ind) (substr $newval 1 -1) }}
