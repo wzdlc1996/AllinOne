@@ -2,19 +2,25 @@
 {{ $rddcont := .Content }}
 {{ $niceBlockEqs := findRE "[$][$][\\w\\W]+?[$][$]" .RawContent }}
 {{ $badBlockEqs := findRE "[$][$][\\w\\W]+?[$][$]" $rddcont }}
-{{ range $ind, $val := $niceBlockEqs }}
-    {{ $rddcont = replace $rddcont (index $badBlockEqs $ind) $val }}
+
+{{ if eq (len $niceBlockEqs) (len $badBlockEqs)}}
+    {{ range $ind, $val := $niceBlockEqs }}
+        {{ $rddcont = replace $rddcont (index $badBlockEqs $ind) $val }}
+    {{ end }}
+
+{{ $rddcont = $rddcont | replaceRE "([^\\$])([$][^\\$\n]+?[$])([^\\$])" "$1 $2 $3" }}
 {{ end }}
-
-{{ $rddcont = $rddcont | replaceRE "([^\\$])([$][^\\$]+?[$])([^\\$])" "$1 $2 $3" }}
-
 
 
 {{ $niceInlineEqs := findRE "[^\\$][$][^\\$\n]+?[$][^\\$]" .RawContent }}
 {{ $badInlineEqs := findRE " [$][^\\$\n]+?[$] " $rddcont }}
-{{ range $ind, $val := $niceInlineEqs }}
-    {{ $newval := replaceRE "([$][^\\$]+?[$])" " $1 " $val }}
-    {{ $rddcont = replace $rddcont (index $badInlineEqs $ind) (substr $newval 1 -1) }}
+{{ if eq (len $niceInlineEqs) ($badInlineEqs)}}
+    {{ range $ind, $val := $niceInlineEqs }}
+        {{ $newval := replaceRE "([$][^\\$\n]+?[$])" " $1 " $val }}
+        {{ $rddcont = replace $rddcont (index $badInlineEqs $ind) (substr $newval 1 -1) }}
+    {{ end }}
 {{ end }}
 
 {{- $rddcont | safeHTML -}}
+
+

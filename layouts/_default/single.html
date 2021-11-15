@@ -30,7 +30,11 @@
             {{ end }}
             {{ $content | safeHTML }}
           -->
+          {{ if not .Params.nomath }}
             {{ partial "escapeMathjaxEq.html" . }}
+          {{ else }}
+            {{ .Content }}
+          {{ end }}
           </div>
 
           <!-- Tags -->

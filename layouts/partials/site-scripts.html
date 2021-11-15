@@ -56,7 +56,7 @@
 <!-- /.Highlight -->
 
 <!-- Latex Rendering -->
-{{ if .Site.Params.mathjax }}
+{{ if and (not .Params.nomath) .Site.Params.mathjax }}
   {{ partial "mathjaxSupport.html" . }}
 {{ end }}
 
