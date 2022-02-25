@@ -1,5 +1,5 @@
 {{ $rawcont := .RawContent }}
-{{ $rddcont := .Content }}
+{{ $rddcont := .Content }}<!--Is the renderred contents-->
 {{ $niceBlockEqs := findRE "[$][$][\\w\\W]+?[$][$]" .RawContent }}
 {{ $badBlockEqs := findRE "[$][$][\\w\\W]+?[$][$]" $rddcont }}
 
@@ -8,19 +8,20 @@
         {{ $rddcont = replace $rddcont (index $badBlockEqs $ind) $val }}
     {{ end }}
 
-{{ $rddcont = $rddcont | replaceRE "([^\\$])([$][^\\$\n]+?[$])([^\\$])" "$1 $2 $3" }}
+
 {{ end }}
 
+{{ $rddcont = $rddcont | replaceRE "([^\\$])([$][^\\$\n]+?[$])([^\\$])" "$1 $2 $3" }}
 
+<!--The eq. pattern in the rawcontent might be $blablabla$[punctuation], so use the following re-pattern -->
 {{ $niceInlineEqs := findRE "[^\\$][$][^\\$\n]+?[$][^\\$]" .RawContent }}
+<!--The eq. pattern in renderred content has been modified in line-14, so this form is safe.-->
 {{ $badInlineEqs := findRE " [$][^\\$\n]+?[$] " $rddcont }}
-{{ if eq (len $niceInlineEqs) ($badInlineEqs)}}
+{{ if eq (len $niceInlineEqs) (len $badInlineEqs)}}
     {{ range $ind, $val := $niceInlineEqs }}
         {{ $newval := replaceRE "([$][^\\$\n]+?[$])" " $1 " $val }}
-        {{ $rddcont = replace $rddcont (index $badInlineEqs $ind) (substr $newval 1 -1) }}
+        {{ $rddcont = replace $rddcont (index $badInlineEqs $ind) $newval }}
     {{ end }}
 {{ end }}
 
 {{- $rddcont | safeHTML -}}
-
-
